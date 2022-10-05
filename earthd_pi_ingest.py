@@ -62,8 +62,6 @@ def cleanAnnotationInDB (refNum):
         arryAnnotationNum.append(row[1])
     resSampleAnnotationNum = tuple([*set(arrySampleAnnotationNum)])
     resAnnotationNum = tuple([*set(arryAnnotationNum)])
-    print(resAnnotationNum)
-    print(resSampleAnnotationNum)
     deleteSampleAnnotationQuery = ''' DELETE FROM sampling_feature_annotation WHERE sampling_feature_annotation_num in ''' + str(resSampleAnnotationNum)
     deleteAnnotationQuery = ''' DELETE FROM annotation where annotation_num in ''' + str(resAnnotationNum)
     with conn.cursor() as curs:
@@ -102,7 +100,6 @@ for entry in entries:
 
     isRowEnd = False
     for row in range(2, physicalInfoSheet.nrows):
-        print(physicalInfoSheet.row(row))
         if isRowEnd:
             break
 
