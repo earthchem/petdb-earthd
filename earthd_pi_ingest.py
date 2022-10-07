@@ -10,8 +10,8 @@
  *               Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 annotation_type_num     annotation_type_name           name appeared in Earthd template
-91                          VocanoSource               VOLCANO_SOURCE
-92                          VocanoNumber               VOLCANO_NUMER
+91                          VolcanoSource              VOLCANO_SOURCE
+92                          VolcanoNumber              VOLCANO_NUMER
 93                          Eruption                   ERUPTION
 94	                        Formation                  FORMATION
 95	                        Member                     MEMBER
