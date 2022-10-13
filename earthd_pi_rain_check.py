@@ -17,8 +17,10 @@ import xlrd
 import os
 
 # pre-defined column header of sheet 'PHSICAL INFO', agreed by Sara and Erin on Oct 13 2022 meeting
+# VOLCANO_NUMBER/VOLCANO_NUMER, TEPHRA_NAME/TEPHRA, DEPOSIT_MECHANISM/DEPOSIT_DEPOSIT, TEPHRA_THICKNESS_UNIT/TEPHRA_THICKNESS UNIT
+
 earthdHeader = ["SAMPLE_NAME", "VOLCANO_SOURCE", "VOLCANO_NUMBER", "ERUPTION", "FORMATION",
-                "MEMBER", "TEPHRA", "TEPHRA_COMMENT", "DEPOSIT_MECHANISM", "TEPHRA_THICKNESS",
+                "MEMBER", "TEPHRA_NAME", "TEPHRA_COMMENT", "DEPOSIT_MECHANISM", "TEPHRA_THICKNESS",
                 "TEPHRA_THICKNESS_UNIT", "TEPHRA_GRAIN_SIZE", "TEPHRA_FRESH_COLOR", "TEPHRA_ALTERED_COLOR"]
 # controlled vocabulary used for the property DEPOSIT_MECHANISM
 TephraMechanismVoc = ["TEPHRA FALL", "REWORKED",
@@ -102,7 +104,7 @@ for entry in entries:
                 break
             else:
                 if item not in earthdHeader:
-                    if item in ["TEPHRA_DEPOSIT","VOLCANO_NUMER","TEPHRA_THICKNESS UNIT"]:
+                    if item in ["TEPHRA_DEPOSIT","VOLCANO_NUMER","TEPHRA_THICKNESS UNIT","TEPHRA"]:
                         isHeaderValidated = True
                     else:
                         validationFileObj.write(
