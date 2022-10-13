@@ -3,7 +3,7 @@
  *
  * Validate sheet 'PHYSICAL INFO' of Tephera data template.
  *   1. check if column header correct
- *   2. check if values in column TEPHRA_DEPOSIT,TEPHRA_THICKNESS UNIT,TEPHRA_GRAIN_SIZE correct
+ *   2. check if values in column DEPOSIT_MECHANISM correct
  *   3. check if sample exist in sheet SAMPLES and any of data sheets (ROCKS, MINERALS and INCLUSIONS)
  *
  * @author       Peng Ji
@@ -16,18 +16,18 @@
 import xlrd
 import os
 
-# pre-defined column header of sheet 'PHSICAL INFO'
-earthdHeader = ["SAMPLE_NAME", "VOLCANO_SOURCE", "VOLCANO_NUMER", "ERUPTION", "FORMATION",
-                "MEMBER", "TEPHRA", "TEPHRA_COMMENT", "TEPHRA_DEPOSIT", "TEPHRA_THICKNESS",
-                "TEPHRA_THICKNESS UNIT", "TEPHRA_GRAIN_SIZE", "TEPHRA_FRESH_COLOR", "TEPHRA_ALTERED_COLOR"]
-# controlled vocabulary used for the property TEPHRA_DEPOSIT
-TephraDepositVoc = ["TEPHRA FALL", "REWORKED",
-                    "PYROCLASTIC FLOW", "SURGE DEPOSIT"]
+# pre-defined column header of sheet 'PHSICAL INFO', agreed by Sara and Erin on Oct 13 2022 meeting
+earthdHeader = ["SAMPLE_NAME", "VOLCANO_SOURCE", "VOLCANO_NUMBER", "ERUPTION", "FORMATION",
+                "MEMBER", "TEPHRA", "TEPHRA_COMMENT", "DEPOSIT_MECHANISM", "TEPHRA_THICKNESS",
+                "TEPHRA_THICKNESS_UNIT", "TEPHRA_GRAIN_SIZE", "TEPHRA_FRESH_COLOR", "TEPHRA_ALTERED_COLOR"]
+# controlled vocabulary used for the property DEPOSIT_MECHANISM
+TephraMechanismVoc = ["TEPHRA FALL", "REWORKED",
+                    "PYROCLASTIC FLOW", "SURGE DEPOSIT", "LAVA FLOW"]
 # controlled vocabulary used for the property TEPHRA_THICKNESS UNIT
-TephraThicknessUnitVoc = ["m", 'cm', 'mm']
+#TephraThicknessUnitVoc = ["m", 'cm', 'mm']
 # controlled vocabulary used for the property TEPHRA_GRAIN_SIZE
-TehpraGrainSizeVoc = ["BLOCKS/BOMBS",
-                      "LAPILLI", "VOLCANIC ASH", "VOLCANIC DUST"]
+#TephraGrainSizeVoc = ["BLOCKS/BOMBS",
+#                      "LAPILLI", "VOLCANIC ASH", "VOLCANIC DUST"]
 
 # match sampleName between sheet 'PHYSICAL INFO' and 'SAMPLES', 'ROCKS','MINERALS','INCLUSIONS'
 def matchSampleName(sampleName):
@@ -102,9 +102,12 @@ for entry in entries:
                 break
             else:
                 if item not in earthdHeader:
-                    validationFileObj.write(
-                        "Property \'" + item + "\' does not match pre-defined property.\n")
-                    isHeaderValidated = False
+                    if item in ["TEPHRA_DEPOSIT","VOLCANO_NUMER","TEPHRA_THICKNESS UNIT"]:
+                        isHeaderValidated = True
+                    else:
+                        validationFileObj.write(
+                            "Property \'" + item + "\' does not match pre-defined property.\n")
+                        isHeaderValidated = False
         if isHeaderValidated:
             isCellValidated = True
             for row in range(2, physicalInfoSheet.nrows):   # data start from row 2
@@ -117,17 +120,17 @@ for entry in entries:
                         isCellValidated = False
                         validationFileObj.write("The sample \'" + str(physicalInfoSheet.cell_value(row,0)) + "\'  in cell A" + str(row+1) + " of sheet \'PHYSICAL INFO\' does not match anyone in sheets " + str(matchSampleNameResult) +"\n")
                     # check column TEPHRA_DEPOSIT (index: 8)
-                    if str(physicalInfoSheet.cell_value(row,8)).strip()!= '' and str(physicalInfoSheet.cell_value(row,8)) not in TephraDepositVoc:
+                    if str(physicalInfoSheet.cell_value(row,8)).strip()!= '' and str(physicalInfoSheet.cell_value(row,8)) not in TephraMechanismVoc:
                         isCellValidated = False
                         validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,8)) + "\'  in cell I" + str(row+1) + " of sheet \'PHYSICAL INFO\' is not in the controlled list of \'TEPHRA_DEPOSIT\'.\n")
                     # check column TEPHRA_THICKNESS UNIT (index: 10)
-                    if str(physicalInfoSheet.cell_value(row,10)).strip()!= '' and str(physicalInfoSheet.cell_value(row,10)) not in TephraThicknessUnitVoc:
-                        isCellValidated = False
-                        validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,10)) + "\'  in cell K" + str(row+1) + " of sheet \'PHYSICAL INFO\'is not in the controlled list of \'TEPHRA_THICKNESS UNIT\'.\n")
+                    #if str(physicalInfoSheet.cell_value(row,10)).strip()!= '' and str(physicalInfoSheet.cell_value(row,10)) not in TephraThicknessUnitVoc:
+                    #    isCellValidated = False
+                    #    validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,10)) + "\'  in cell K" + str(row+1) + " of sheet \'PHYSICAL INFO\'is not in the controlled list of \'TEPHRA_THICKNESS UNIT\'.\n")
                     # check column TEPHRA_GRAIN_SIZE (index: 11)
-                    if str(physicalInfoSheet.cell_value(row,11)).strip()!= '' and str(physicalInfoSheet.cell_value(row,11)) not in TehpraGrainSizeVoc:
-                        isCellValidated = False
-                        validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,11)) + "\'  in cell L" + str(row+1) + " of sheet \'PHYSICAL INFO\' is not in the controlled list of \'TEPHRA_GRAIN_SIZE\'.\n")
+                    #if str(physicalInfoSheet.cell_value(row,11)).strip()!= '' and str(physicalInfoSheet.cell_value(row,11)) not in TehpraGrainSizeVoc:
+                    #    isCellValidated = False
+                    #    validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,11)) + "\'  in cell L" + str(row+1) + " of sheet \'PHYSICAL INFO\' is not in the controlled list of \'TEPHRA_GRAIN_SIZE\'.\n")
             if isCellValidated:
                 destFileName = 'validated_files/' + entry
                 os.rename(fileName, destFileName)           

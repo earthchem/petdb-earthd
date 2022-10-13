@@ -11,15 +11,15 @@
 
 annotation_type_num     annotation_type_name           name appeared in Earthd template
 91                          VolcanoSource              VOLCANO_SOURCE
-92                          VolcanoNumber              VOLCANO_NUMER
+92                          VolcanoNumber              VOLCANO_NUMBER
 93                          Eruption                   ERUPTION
 94	                        Formation                  FORMATION
 95	                        Member                     MEMBER
 96                          Tephra                     TEPHRA
 97                          TephraComment              TEPHRA_COMMENT
-98                          TephraDeposit              TEPHRA_DEPOSIT
+98                          TephraDeposit              DEPOSIT_MECHANISM
 99                          TephraThickness            TEPHRA_THICKNESS
-100                         TephraThicknessUnit        TEPHRA_THICKNESS UNIT
+100                         TephraThicknessUnit        TEPHRA_THICKNESS_UNIT
 101                         TephraGrainSize            TEPHRA_GRAIN_SIZE
 102                         TephraFreshColor           TEPHRA_FRESH_COLOR
 103                         TephraAlteredColor         TEPHRA_ALTERED_COLOR
@@ -33,11 +33,11 @@ import psycopg2
 from config import config
 import os
 
-earthdHeader = ["SAMPLE_NAME", "VOLCANO_SOURCE", "VOLCANO_NUMER", "ERUPTION", "FORMATION", "MEMBER", "TEPHRA", "TEPHRA_COMMENT", "TEPHRA_DEPOSIT", "TEPHRA_THICKNESS",
-                "TEPHRA_THICKNESS UNIT", "TEPHRA_GRAIN_SIZE", "TEPHRA_FRESH_COLOR", "TEPHRA_ALTERED_COLOR"]
-tephraAnnotationDict = {"VOLCANO_SOURCE": 91, "VOLCANO_NUMER": 92, "ERUPTION": 93, "FORMATION": 94,
-                        "MEMBER": 95, "TEPHRA": 96, "TEPHRA_COMMENT": 97, "TEPHRA_DEPOSIT": 98, "TEPHRA_THICKNESS": 99,
-                        "TEPHRA_THICKNESS UNIT": 100, "TEPHRA_GRAIN_SIZE": 101, "TEPHRA_FRESH_COLOR": 102, "TEPHRA_ALTERED_COLOR": 103}
+earthdHeader = ["SAMPLE_NAME", "VOLCANO_SOURCE", "VOLCANO_NUMBER", "ERUPTION", "FORMATION", "MEMBER", "TEPHRA", "TEPHRA_COMMENT", "DEPOSIT_MECHANISM", "TEPHRA_THICKNESS",
+                "TEPHRA_THICKNESS_UNIT", "TEPHRA_GRAIN_SIZE", "TEPHRA_FRESH_COLOR", "TEPHRA_ALTERED_COLOR"]
+tephraAnnotationDict = {"VOLCANO_SOURCE": 91, "VOLCANO_NUMBER": 92, "ERUPTION": 93, "FORMATION": 94,
+                        "MEMBER": 95, "TEPHRA": 96, "TEPHRA_COMMENT": 97, "DEPOSIT_MECHANISM": 98, "TEPHRA_THICKNESS": 99,
+                        "TEPHRA_THICKNESS_UNIT": 100, "TEPHRA_GRAIN_SIZE": 101, "TEPHRA_FRESH_COLOR": 102, "TEPHRA_ALTERED_COLOR": 103}
 
 
 def findSampleIdByName(sampleName):
