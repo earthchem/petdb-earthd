@@ -15,9 +15,9 @@ annotation_type_num     annotation_type_name           name appeared in Earthd t
 93                          Eruption                   ERUPTION
 94	                        Formation                  FORMATION
 95	                        Member                     MEMBER
-96                          Tephra                     TEPHRA_NAME
+96                          TephraName                 TEPHRA_NAME
 97                          TephraComment              TEPHRA_COMMENT
-98                          TephraDeposit              DEPOSIT_MECHANISM
+98                          DepositMechanism           DEPOSIT_MECHANISM
 99                          TephraThickness            TEPHRA_THICKNESS
 100                         TephraThicknessUnit        TEPHRA_THICKNESS_UNIT
 101                         TephraGrainSize            TEPHRA_GRAIN_SIZE
