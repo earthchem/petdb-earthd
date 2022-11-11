@@ -49,7 +49,6 @@ def findSampleIdByName(sampleName):
             return str(sampleSheet.cell_value(row, 0)).strip()
 
 def cleanAnnotationInDB (refNum):
-    print(str(refNum))
     annotationCheckQuery = '''  select sfa.sampling_feature_annotation_num,sfa.annotation_num  from sampling_feature_annotation sfa join annotation a  on sfa.annotation_num=a.annotation_num  where a.annotation_type_num >90 and a.data_source_num =%s ''' 
     arrySampleAnnotationNum = []
     arryAnnotationNum = []
@@ -57,7 +56,7 @@ def cleanAnnotationInDB (refNum):
         curs.execute( annotationCheckQuery, (refNum, ))
         rows = curs.fetchall()
     for row in rows:
-        #print(row)
+        print(row)
         arrySampleAnnotationNum.append(row[0])
         arryAnnotationNum.append(row[1])
     resSampleAnnotationNum = tuple([*set(arrySampleAnnotationNum)])
@@ -65,11 +64,13 @@ def cleanAnnotationInDB (refNum):
     deleteSampleAnnotationQuery = ''' DELETE FROM sampling_feature_annotation WHERE sampling_feature_annotation_num in ''' + str(resSampleAnnotationNum)
     deleteAnnotationQuery = ''' DELETE FROM annotation where annotation_num in ''' + str(resAnnotationNum)
     with conn.cursor() as curs:
-        curs.execute(deleteSampleAnnotationQuery)
-        curs.execute(deleteAnnotationQuery)
-    conn.commit()
+        if len(resSampleAnnotationNum)>0:
+            curs.execute(deleteSampleAnnotationQuery)
+        if len(resAnnotationNum)>0:
+            curs.execute(deleteAnnotationQuery)
+        conn.commit()
 
-# main function
+    # main function
 
 reportFileName = 'earthd_pi_ingest_report_' + str(date.today()) + '.txt'
 reportFileObj = open(reportFileName, 'w')
