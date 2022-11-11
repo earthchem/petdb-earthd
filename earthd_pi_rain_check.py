@@ -122,9 +122,12 @@ for entry in entries:
                         isCellValidated = False
                         validationFileObj.write("The sample \'" + str(physicalInfoSheet.cell_value(row,0)) + "\'  in cell A" + str(row+1) + " of sheet \'PHYSICAL INFO\' does not match anyone in sheets " + str(matchSampleNameResult) +"\n")
                     # check column TEPHRA_DEPOSIT (index: 8)
-                    if str(physicalInfoSheet.cell_value(row,8)).strip()!= '' and str(physicalInfoSheet.cell_value(row,8)) not in TephraMechanismVoc:
-                        isCellValidated = False
-                        validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,8)) + "\'  in cell I" + str(row+1) + " of sheet \'PHYSICAL INFO\' is not in the controlled list of \'TEPHRA_DEPOSIT\'.\n")
+                    if str(physicalInfoSheet.cell_value(row,8)).strip()!= '':
+                         tmpDepositList = [word.strip() for word in str(physicalInfoSheet.cell_value(row,8)).split(';')]
+                         difResult = list(set(tmpDepositList).difference(TephraMechanismVoc))
+                         if len(difResult)>0:
+                            isCellValidated = False
+                            validationFileObj.write("The value \'" + str(physicalInfoSheet.cell_value(row,8)) + "\'  in cell I" + str(row+1) + " of sheet \'PHYSICAL INFO\' is not in the controlled list of \'DEPOSIT_MECHANISM\'.\n")
                     # check column TEPHRA_THICKNESS UNIT (index: 10)
                     #if str(physicalInfoSheet.cell_value(row,10)).strip()!= '' and str(physicalInfoSheet.cell_value(row,10)) not in TephraThicknessUnitVoc:
                     #    isCellValidated = False
