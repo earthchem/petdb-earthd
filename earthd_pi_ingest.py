@@ -56,7 +56,6 @@ def cleanAnnotationInDB (refNum):
         curs.execute( annotationCheckQuery, (refNum, ))
         rows = curs.fetchall()
     for row in rows:
-        print(row)
         arrySampleAnnotationNum.append(row[0])
         arryAnnotationNum.append(row[1])
     resSampleAnnotationNum = tuple([*set(arrySampleAnnotationNum)])
