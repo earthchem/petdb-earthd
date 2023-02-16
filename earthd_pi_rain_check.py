@@ -23,7 +23,7 @@ earthdHeader = ["SAMPLE_NAME", "VOLCANO_SOURCE", "VOLCANO_NUMBER", "ERUPTION", "
                 "MEMBER", "TEPHRA_NAME", "TEPHRA_COMMENT", "DEPOSIT_MECHANISM", "TEPHRA_THICKNESS",
                 "TEPHRA_THICKNESS_UNIT", "TEPHRA_GRAIN_SIZE", "TEPHRA_FRESH_COLOR", "TEPHRA_ALTERED_COLOR"]
 # controlled vocabulary used for the property DEPOSIT_MECHANISM
-TephraMechanismVoc = ["TEPHRA FALL", "REWORKED",
+TephraMechanismVoc = ["TEPHRA FALL", "ASH FALL", "REWORKED",
                     "PYROCLASTIC FLOW", "SURGE DEPOSIT", "LAVA FLOW"]
 # controlled vocabulary used for the property TEPHRA_THICKNESS UNIT
 #TephraThicknessUnitVoc = ["m", 'cm', 'mm']
