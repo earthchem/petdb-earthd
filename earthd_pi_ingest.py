@@ -60,8 +60,15 @@ def cleanAnnotationInDB (refNum):
         arryAnnotationNum.append(row[1])
     resSampleAnnotationNum = tuple([*set(arrySampleAnnotationNum)])
     resAnnotationNum = tuple([*set(arryAnnotationNum)])
-    deleteSampleAnnotationQuery = ''' DELETE FROM sampling_feature_annotation WHERE sampling_feature_annotation_num in ''' + str(resSampleAnnotationNum)
-    deleteAnnotationQuery = ''' DELETE FROM annotation where annotation_num in ''' + str(resAnnotationNum)
+    if len(resSampleAnnotationNum) == 1:
+        deleteSampleAnnotationQuery = ''' DELETE FROM sampling_feature_annotation WHERE sampling_feature_annotation_num = ''' + str(resSampleAnnotationNum[0])
+    else:
+        deleteSampleAnnotationQuery = ''' DELETE FROM sampling_feature_annotation WHERE sampling_feature_annotation_num in ''' + str(resSampleAnnotationNum)
+    if len(resAnnotationNum) == 1:
+        deleteAnnotationQuery = ''' DELETE FROM annotation where annotation_num = ''' + str(resAnnotationNum[0])
+    else:
+        deleteAnnotationQuery = ''' DELETE FROM annotation where annotation_num in ''' + str(resAnnotationNum)
+
     with conn.cursor() as curs:
         if len(resSampleAnnotationNum)>0:
             curs.execute(deleteSampleAnnotationQuery)
