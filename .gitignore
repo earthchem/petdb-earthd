@@ -137,3 +137,5 @@ validated_files
 
 *.txt
 *.zip
+
+.DS_Store
