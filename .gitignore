@@ -134,6 +134,7 @@ database.ini
 # folders
 earthd_files
 validated_files
+done
 
 *.txt
 *.zip
